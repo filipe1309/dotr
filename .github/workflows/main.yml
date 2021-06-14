@@ -21,3 +21,12 @@ jobs:
           username: ${{ secrets.ftp_username }}
           password: ${{ secrets.ftp_password }}
           server-dir: ${{ secrets.ftp_server_dir }}
+          exclude: .git*
+            - **.git*
+            - .git*/**
+            -  **/.git*/**
+            - **.github*
+            - .github*/**
+            -  **/.github*/**
+            - node_modules/**
+            - node_modules/**/*
