@@ -11,8 +11,8 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v2
 
-      - name: Install Composer Dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
+      - name: 💿 Install Dependencies
+        run: composer install --prefer-dist --no-progress --no-dev --no-suggest
 
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
