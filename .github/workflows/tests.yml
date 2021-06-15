@@ -1,0 +1,41 @@
+on:
+  pull_request: {}
+  push:
+    branches:
+      - main
+
+jobs:
+  phpvalidation:
+    name: ✅ Tests
+
+    runs-on: ubuntu-latest
+
+    # services:
+    #   mysql:
+    #     image: mysql:8.0
+    #     ports:
+    #       - 3306:3306
+    #     env:
+    #       MYSQL_ROOT_PASSWORD: secret
+    #       MYSQL_ALLOW_EMPTY_PASSWORD: yes
+    #       MYSQL_USER: lumen
+    #       MYSQL_PASSWORD: secret
+    #       MYSQL_DATABASE: lumen
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2
+
+      - name: 💿 Install Dependencies
+        uses: ./.github/actions/laravel
+
+      - name: ✅ PHPUnit
+        run: ./vendor/bin/phpunit --do-not-cache-result
+        env:
+          CI: true
+          APP_KEY: ${{ secrets.APP_KEY }}
+
+      - name: ✅ PHPCS
+        run: ./vendor/bin/phpcs
+
+      - name: ✅ PHPStan
+        run: ./vendor/bin/phpstan analyse  --memory-limit=2G
