@@ -30,6 +30,9 @@ jobs:
 
       - name: ✅ PHPUnit
         run: ./vendor/bin/phpunit --do-not-cache-result
+        env:
+          CI: true
+          API_KEY: ${{ secrets.API_KEY }}
 
       - name: ✅ PHPCS
         run: ./vendor/bin/phpcs
