@@ -1,0 +1,30 @@
+name: Laravel Workflow
+on:
+  pull_request: {}
+  push:
+    branches:
+      - main
+
+jobs:
+  phpvalidation:
+    name: PHP Validation Step
+
+    runs-on: ubuntu-latest
+
+    # services:
+    #   mysql:
+    #     image: mysql:8.0
+    #     ports:
+    #       - 3306:3306
+    #     env:
+    #       MYSQL_ROOT_PASSWORD: secret
+    #       MYSQL_ALLOW_EMPTY_PASSWORD: yes
+    #       MYSQL_USER: lumen
+    #       MYSQL_PASSWORD: secret
+    #       MYSQL_DATABASE: lumen
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/laravel
+      - run: ./vendor/bin/phpunit --do-not-cache-result
+      - run: ./vendor/bin/phpcs
+      - run: ./vendor/bin/phpstan analyse  --memory-limit=2G
